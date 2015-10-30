@@ -92,7 +92,6 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerListView = (ListView) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectItem(position);
             }
@@ -179,7 +178,6 @@ public class NavigationDrawerFragment extends Fragment {
 
         // Defer code dependent on restoration of previous instance state.
         mDrawerLayout.post(new Runnable() {
-            @Override
             public void run() {
                 mDrawerToggle.syncState();
             }
