@@ -46,8 +46,15 @@ public class MainActivity extends ActionBarActivity
         // update the main content by replacing fragments
     	System.out.println("click fragmentdrawer");
         FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment f;
+        if(position==0) {
+        	f = NewItemFragment.newInstance(position + 1);
+        }
+        else {
+        	f = PlaceholderFragment.newInstance(position + 1);
+        }
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, f)
                 .commit();
     }
 
