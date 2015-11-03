@@ -1,16 +1,20 @@
 package com.example.passwordbox;
 
-import android.support.v7.app.ActionBarActivity;
+import java.util.List;
+
+import com.example.bean.PasswordEntity;
+
 import android.app.Activity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -96,18 +100,24 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
+        mDrawerListView.setAdapter(new ArrayAdapter<PasswordEntity>(
                 getActionBar().getThemedContext(),
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_section1)/*,
+                ((MainActivity) getActivity()).getEntityList()
+                /*new String[]{
+                        getString(R.string.title_section1),
                         getString(R.string.title_section2),
-                        getString(R.string.title_section3),*/
-                }));
+                        getString(R.string.title_section3),
+                }*/));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
+    
+    /**
+     * ConvertL
+     * @return
+     */
 
     public boolean isDrawerOpen() {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
@@ -209,7 +219,7 @@ public class NavigationDrawerFragment extends Fragment {
         }
     }
 
-    @Override
+	@Override
     public void onDetach() {
         super.onDetach();
         mCallbacks = null;

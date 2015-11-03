@@ -1,44 +1,83 @@
 package com.example.db;
 
+import java.sql.SQLException;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 
-//DatabaseHelper作为一个访问SQLite的助手类，提供两个方面的功能，
-//第一，getReadableDatabase(),getWritableDatabase()可以获得SQLiteDatabse对象，通过该对象可以对数据库进行操作
-//第二，提供了onCreate()和onUpgrade()两个回调函数，允许我们在创建和升级数据库时，进行自己的操作
+import com.example.bean.PasswordEntity;
+import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
+
+	private static final String DATABASE_NAME = "PasswordBox.db";
+	private static final int DATABASE_VERSION = 1;
 	
-	private static final int VERSION = 1;
-	//在SQLiteOepnHelper的子类当中，必须有该构造函数
-	public DatabaseHelper(Context context, String name, CursorFactory factory,
-			int version) {
-		//必须通过super调用父类当中的构造函数
-		super(context, name, factory, version);
-		// TODO Auto-generated constructor stub
-	}
-	public DatabaseHelper(Context context,String name){
-		this(context,name,VERSION);
-	}
-	public DatabaseHelper(Context context,String name,int version){
-		this(context, name,null,version);
+	// the DAO object we use to access the SimpleData table
+	private Dao<PasswordEntity, Integer> EntityDao = null;
+	private RuntimeExceptionDao<PasswordEntity, Integer> EntityRuntimeDao = null;
+	
+
+	public DatabaseHelper(Context context) {
+		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
-	//该函数是在第一次创建数据库的时候执行,实际上是在第一次得到SQLiteDatabse对象的时候，才会调用这个方法
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		// TODO Auto-generated method stub
-		System.out.println("create a Database");
-		//execSQL函数用于执行SQL语句
-		db.execSQL("create table PasswordBox(id int,name varchar(20),description varchar(30)");
-	}
 
 	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		// TODO Auto-generated method stub
-		System.out.println("update a Database");
+	public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource,
+			int oldVersion, int newVersion) {
+		try {
+			TableUtils.dropTable(connectionSource, PasswordEntity.class, true);
+			onCreate(db, connectionSource);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	/**
+	 * Returns the Database Access Object (DAO) for our SimpleData class. It will create it or just give the cached
+	 * value.
+	 */
+	public Dao<PasswordEntity, Integer> getDao() throws SQLException {
+		if (EntityDao == null) {
+			EntityDao = getDao(PasswordEntity.class);
+		}
+		return EntityDao;
+	}
+	
+	/**
+	 * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our SimpleData class. It will
+	 * create it or just give the cached value. RuntimeExceptionDao only through RuntimeExceptions.
+	 */
+	public RuntimeExceptionDao<PasswordEntity, Integer> getEntityDao() {
+		if (EntityRuntimeDao == null) {
+			EntityRuntimeDao = getRuntimeExceptionDao(PasswordEntity.class);
+		}
+		return EntityRuntimeDao;
+	}
+	
+	/**
+	 * Close the database connections and clear any cached DAOs.
+	 */
+	@Override
+	public void close() {
+		super.close();
+		EntityRuntimeDao = null;
+	}
+
+
+	@Override
+	public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
+		try {
+			TableUtils.createTable(connectionSource, PasswordEntity.class);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

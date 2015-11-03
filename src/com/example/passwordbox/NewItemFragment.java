@@ -9,9 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.bean.PasswordEntity;
+import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 public class NewItemFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
+    
+    
+    private RuntimeExceptionDao<PasswordEntity, Integer> entityDao;
     
     private EditText nameEdit;
     private EditText passwordEdit;
@@ -20,7 +27,6 @@ public class NewItemFragment extends Fragment {
     private Button saveButton;
     private Button updateButton;
     private Button deleteButton;
-    private boolean flag = false;
     public NewItemFragment() {
     }
 
@@ -45,21 +51,40 @@ public class NewItemFragment extends Fragment {
         deleteButton.setOnClickListener(new myClickListener());
         return rootview;
     }
+    
+    private boolean checkLogic() {
+    	if(nameEdit.getText().toString().equals("")){
+        	Toast.makeText(getActivity(),"please Enter name!",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(passwordEdit.getText().toString().equals("")){
+        	Toast.makeText(getActivity(),"please Enter name!",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(descriptionEdit.getText().toString().equals("")){
+        	Toast.makeText(getActivity(),"please Enter name!",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
 
     class myClickListener implements View.OnClickListener{
 
 
         public void onClick(View view) {
-           /* if (view == initButton){
-                //≥ı ºªØ√‹‘ø
-                String desKey = "";
-                try {
-                    desKey = des.initKey();
-                }catch (Exception e){
-                    e.printStackTrace();
+            if (view == saveButton){
+                if(checkLogic()) {
+                	entityDao = ((MainActivity) getActivity()).getHelper()
+            				.getEntityDao();
+                	PasswordEntity passwordEntity = new PasswordEntity();
+                	passwordEntity.setEntityName(nameEdit.getText().toString());
+                	passwordEntity.setEntityPassword(passwordEdit.getText().toString());
+                	passwordEntity.setEntityDiscription(descriptionEdit.getText().toString());
+                	entityDao.create(passwordEntity);
+                	
                 }
-                miyaoEdit.setText(desKey);
-            }
+                
+            }/*
             if (view == jiamiButton){
                 String desKey = "";
                 desKey = miyaoEdit.getText().toString();

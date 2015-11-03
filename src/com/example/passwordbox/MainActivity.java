@@ -1,20 +1,26 @@
 package com.example.passwordbox;
 
+import java.util.List;
+
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
+
+import com.example.bean.PasswordEntity;
+import com.example.db.DatabaseHelper;
+import com.example.db.DatabaseOperator;
+import com.example.db.OrmLiteActionBarActivity;
 
 
-public class MainActivity extends ActionBarActivity
+public class MainActivity extends OrmLiteActionBarActivity<DatabaseHelper>
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
@@ -42,19 +48,13 @@ public class MainActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
     
-    public void onNavigationDrawerItemSelected(int position) {
+    @Override
+	public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
     	System.out.println("click fragmentdrawer");
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment f;
-        if(position==0) {
-        	f = NewItemFragment.newInstance(position + 1);
-        }
-        else {
-        	f = PlaceholderFragment.newInstance(position + 1);
-        }
         fragmentManager.beginTransaction()
-                .replace(R.id.container, f)
+                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                 .commit();
     }
 
@@ -108,6 +108,15 @@ public class MainActivity extends ActionBarActivity
         }
         return super.onOptionsItemSelected(item);
     }
+    
+    /**
+     * Get Entities from DB
+     */
+    public List<PasswordEntity> getEntityList() {
+    	DatabaseOperator operator = new DatabaseOperator(getHelper()
+				.getEntityDao());
+		return operator.queryEntityList(null);
+    }
 
     /**
      * A placeholder fragment containing a simple view.
@@ -147,6 +156,8 @@ public class MainActivity extends ActionBarActivity
             ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
+        
+       
     }
 
 }
