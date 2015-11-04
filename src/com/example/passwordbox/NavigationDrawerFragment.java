@@ -2,9 +2,8 @@ package com.example.passwordbox;
 
 import java.util.List;
 
-import com.example.bean.PasswordEntity;
-
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -22,9 +21,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.bean.PasswordEntity;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -56,7 +58,12 @@ public class NavigationDrawerFragment extends Fragment {
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerListView;
-    private View mFragmentContainerView;
+    
+    public ListView getmDrawerListView() {
+		return mDrawerListView;
+	}
+
+	private View mFragmentContainerView;
 
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
@@ -96,20 +103,21 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerListView = (ListView) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            @Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectItem(position);
             }
-        });
-        mDrawerListView.setAdapter(new ArrayAdapter<PasswordEntity>(
+        });//((MainActivity) getActivity()).getEntityList()
+        mDrawerListView.setAdapter(new EntityAdapter(((MainActivity) getActivity()).getEntityList(), getActivity()));/*new ArrayAdapter<PasswordEntity>(
                 getActionBar().getThemedContext(),
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
-                ((MainActivity) getActivity()).getEntityList()
-                /*new String[]{
+                
+                new String[]{
                         getString(R.string.title_section1),
                         getString(R.string.title_section2),
                         getString(R.string.title_section3),
-                }*/));
+                })*/
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
@@ -188,7 +196,8 @@ public class NavigationDrawerFragment extends Fragment {
 
         // Defer code dependent on restoration of previous instance state.
         mDrawerLayout.post(new Runnable() {
-            public void run() {
+            @Override
+			public void run() {
                 mDrawerToggle.syncState();
             }
         });
@@ -279,6 +288,55 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     /**
+     * Adapter of Draw's ListView
+     */
+    private class EntityAdapter extends BaseAdapter {
+    	
+    	
+
+		private List<PasswordEntity> entityList;
+
+
+    	private Context context;
+
+    	public EntityAdapter(List<PasswordEntity> entityList, Context context) {
+    		super();
+			this.entityList = entityList;
+			this.context = context;
+		}
+    	
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return entityList.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			return entityList.get(position);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return entityList.get(position).getEntityId();
+		}
+
+		@Override
+		public View getView(int position, View arg1, ViewGroup arg2) {
+			// TODO Auto-generated method stub
+			LayoutInflater layoutInflater = LayoutInflater.from(context);
+			// 调用LayoutInflater对象的inflate方法，可以生成一个View对象
+			View rowView = layoutInflater.inflate(android.R.layout.simple_list_item_1, null);
+			TextView textView = (TextView) rowView.findViewById(android.R.id.text1);
+			textView.setText(((PasswordEntity)getItem(position)).getEntityName());
+			return rowView;
+		}
+    	
+    }
+    
+    /**
      * Callbacks interface that all activities using this fragment must implement.
      */
     public static interface NavigationDrawerCallbacks {
@@ -286,5 +344,6 @@ public class NavigationDrawerFragment extends Fragment {
          * Called when an item in the navigation drawer is selected.
          */
         void onNavigationDrawerItemSelected(int position);
+
     }
 }

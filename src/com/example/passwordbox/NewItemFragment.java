@@ -71,7 +71,8 @@ public class NewItemFragment extends Fragment {
     class myClickListener implements View.OnClickListener{
 
 
-        public void onClick(View view) {
+        @Override
+		public void onClick(View view) {
             if (view == saveButton){
                 if(checkLogic()) {
                 	entityDao = ((MainActivity) getActivity()).getHelper()
@@ -83,60 +84,7 @@ public class NewItemFragment extends Fragment {
                 	entityDao.create(passwordEntity);
                 	
                 }
-                
-            }/*
-            if (view == jiamiButton){
-                String desKey = "";
-                desKey = miyaoEdit.getText().toString();
-                if (desKey.equals("")){
-                    Toast.makeText(getActivity(),"请先初始化密钥",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                String inputStr = "";
-                inputStr = mingEdit.getText().toString();
-                if (inputStr.equals("")){
-                    Toast.makeText(getActivity(),"待加密数据不能为空",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                byte[] inputData = inputStr.getBytes();
-                byte[] outputData = new byte[0];
-                String outputStr = "";
-                try {
-                    outputData = des.encrypt(inputData,desKey);
-                    outputStr = des.encryptBASE64(outputData);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-                miEdit.setText(outputStr);
             }
-            if (view == jiemiButton){
-                String desKey = "";
-                desKey = miyaoEdit.getText().toString();
-                if (desKey.equals("")){
-                    Toast.makeText(getActivity(),"请先初始化密钥并进行加密",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String outputStr = "";
-                outputStr = miEdit.getText().toString();
-                if(outputStr.equals("")){
-                    Toast.makeText(getActivity(),"密文不能为空,请先加密产生密文",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                byte[] outputData = new byte[0];
-                try {
-                    outputData = des.decrypt(des.decryptBASE64(outputStr),desKey);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-                String jiemiStr = new String(outputData);
-                if(jiemiStr.equals("")){
-                    Toast.makeText(getActivity(),"密钥不匹配，解密失败",Toast.LENGTH_SHORT).show();
-                    ming2Edit.setText("");
-                    return;
-                }
-                ming2Edit.setText(new String(outputData));
-            }*/
         }
     }
 

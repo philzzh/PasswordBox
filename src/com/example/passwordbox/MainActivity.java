@@ -48,10 +48,11 @@ public class MainActivity extends OrmLiteActionBarActivity<DatabaseHelper>
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
     
-    @Override
+	@Override
 	public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-    	System.out.println("click fragmentdrawer");
+    	System.out.println("click fragmentdrawer"+position);
+    	System.out.println("mDrawerListView"+mNavigationDrawerFragment);//null why?
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
@@ -132,7 +133,7 @@ public class MainActivity extends OrmLiteActionBarActivity<DatabaseHelper>
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
+        public static  PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
