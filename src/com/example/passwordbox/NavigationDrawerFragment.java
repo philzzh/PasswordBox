@@ -87,7 +87,7 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         // Select either the default item (0) or the last selected item.
-        selectItem(mCurrentSelectedPosition);
+        //selectItem(mCurrentSelectedPosition);
     }
 
     @Override
@@ -171,6 +171,8 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+                // everytime Opened Drawer , fetch EntityList from Database to rebuild ListView . can it be optimized??
+                mDrawerListView.setAdapter(new EntityAdapter(((MainActivity) getActivity()).getEntityList(), getActivity()));
                 if (!isAdded()) {
                     return;
                 }

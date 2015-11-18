@@ -1,12 +1,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <EditText
-        android:id="@+id/nameEdit"
+    <TextView
+        android:id="@+id/nameView"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:hint="@string/new_fragment_name_Text"/>
+    <TextView
+        android:id="@+id/descriptionView"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:hint="@string/new_fragment_description_Text"/>
     <EditText
         android:id="@+id/passwordEdit"
         android:layout_width="fill_parent"
@@ -14,32 +20,22 @@
         android:layout_weight="1"
         android:inputType="textPassword"
         android:hint="@string/new_fragment_password_Text"/>
-    <EditText
-        android:id="@+id/descriptionEdit"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:hint="@string/new_fragment_description_Text"/>
+    
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:background="@drawable/abc_list_selector_background_transition_holo_dark">
+        android:orientation="horizontal">
         <Button
-            android:id="@+id/saveButton"
+            android:id="@+id/verifyButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/new_fragment_add_Btn"/>
-        <Button
-            android:id="@+id/updateButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/new_fragment_update_Btn"/>
+            android:text="@string/verify_fragment_verify_Btn"/>
         <Button
             android:id="@+id/deleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/new_fragment_delete_Btn"/>
+            android:text="@string/verify_fragment_delete_Btn"/>
+        
     </LinearLayout>
 </LinearLayout>

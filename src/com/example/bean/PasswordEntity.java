@@ -1,12 +1,19 @@
 package com.example.bean;
 
+import java.io.Serializable;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "Password_entity")
-public class PasswordEntity {
+public class PasswordEntity implements Serializable {
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public PasswordEntity() {
 		// TODO Auto-generated constructor stub
 	}

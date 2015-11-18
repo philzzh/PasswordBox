@@ -2,22 +2,17 @@ package com.example.passwordbox;
 
 import java.util.List;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.bean.PasswordEntity;
 import com.example.db.DatabaseHelper;
-import com.example.db.DatabaseOperator;
 import com.example.db.OrmLiteActionBarActivity;
+import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 
 public class MainActivity extends OrmLiteActionBarActivity<DatabaseHelper>
@@ -38,28 +33,35 @@ public class MainActivity extends OrmLiteActionBarActivity<DatabaseHelper>
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+       /* mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);*/
+        mTitle = getTitle();
+        System.out.println("onCreate start"+mNavigationDrawerFragment );
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
-
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+        System.out.println("onCreate end"+mNavigationDrawerFragment );
     }
     
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-    	System.out.println("click fragmentdrawer"+position);
-    	System.out.println("mDrawerListView"+mNavigationDrawerFragment);//null why?
+//    	System.out.println("click fragmentdrawer"+position);
+//    	System.out.println("mDrawerListView "+((NavigationDrawerFragment)
+//                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer)).getmDrawerListView().getAdapter().getItem(position));//null why?
+    	PasswordEntity passwordEntity = (PasswordEntity) ((NavigationDrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer)).getmDrawerListView().getAdapter().getItem(position);
+//    	System.out.println("onNavigationDrawerItemSelected Entity name & password"+passwordEntity.getEntityName()+"  "+passwordEntity.getEntityPassword());
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, VerifyFragment.newInstance(passwordEntity))
                 .commit();
     }
 
-    public void onSectionAttached(int number) {
+   /* public void onSectionAttached(int number) {
         switch (number) {
             case 1:
                 mTitle = getString(R.string.title_section1);
@@ -71,8 +73,13 @@ public class MainActivity extends OrmLiteActionBarActivity<DatabaseHelper>
                 mTitle = getString(R.string.title_section3);
                 break;
         }
-    }
+    }*/
 
+	 public void onSectionAttached(String  entityName) {
+	        
+	                mTitle = entityName;
+	    }
+	
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -110,55 +117,158 @@ public class MainActivity extends OrmLiteActionBarActivity<DatabaseHelper>
         return super.onOptionsItemSelected(item);
     }
     
+    private RuntimeExceptionDao<PasswordEntity, Integer> entityDao;
+    
+    public RuntimeExceptionDao<PasswordEntity, Integer> getRuntimeExceptionDao() {
+    	if(this.entityDao==null) {
+    		this.entityDao = getHelper().getEntityDao();
+    	}
+    	return this.entityDao;
+    }
+    
     /**
      * Get Entities from DB
      */
     public List<PasswordEntity> getEntityList() {
-    	DatabaseOperator operator = new DatabaseOperator(getHelper()
-				.getEntityDao());
-		return operator.queryEntityList(null);
+    	
+		return getRuntimeExceptionDao().queryForAll();
+    }
+    
+    public void deleteEntity(PasswordEntity passwordEntity) {
+    	getRuntimeExceptionDao().delete(passwordEntity);
     }
 
-    /**
+   /* *//**
      * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
+     *//*
+    public static class VerifyFragment extends Fragment {
+        *//**
          * The fragment argument representing the section number for this
          * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
+         *//*
+//        private static final String ARG_SECTION_NUMBER = "section_number";
+    	
+		private RuntimeExceptionDao<PasswordEntity, Integer> entityDao;
+    	
+    	private TextView nameView;
+        private EditText passwordEdit;
+        private TextView descriptionView;
+        
+        private Button verifyButton;
+        private Button deleteButton;
+        
+        private static PasswordEntity entity;
+    	
+    	private static final String ARG_ENTITY = "entity";
 
-        /**
+        *//**
          * Returns a new instance of this fragment for the given section
          * number.
-         */
-        public static  PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+         *//*
+        public static  VerifyFragment newInstance(PasswordEntity passwordEntity) {
+        	System.out.println("PlaceholderFragment newInstance entity"+passwordEntity);
+        	entity = passwordEntity;
+            VerifyFragment fragment = new VerifyFragment();
             Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            args.putSerializable(ARG_ENTITY, passwordEntity);
             fragment.setArguments(args);
             return fragment;
         }
 
-        public PlaceholderFragment() {
+        public VerifyFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+//            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        	
+        	System.out.println("PlaceholderFragment onCreateView entity"+entity);
+        	View rootView = inflater.inflate(R.layout.fragment_verify_item, container, false);
+        	nameView = (TextView)rootView.findViewById(R.id.nameView);
+        	nameView.setText(entity.getEntityName());
+            passwordEdit = (EditText)rootView.findViewById(R.id.passwordEdit);
+            descriptionView = (TextView)rootView.findViewById(R.id.descriptionView);
+            descriptionView.setText(entity.getEntityDiscription());
+            verifyButton = (Button)rootView.findViewById(R.id.verifyButton);
+            deleteButton = (Button)rootView.findViewById(R.id.deleteButton);
+            verifyButton.setOnClickListener(new myClickListener());
             return rootView;
         }
 
+        
+        class myClickListener implements View.OnClickListener{
+
+			@Override
+			public void onClick(View view) {
+				if (view == verifyButton){
+					String pwd = passwordEdit.getText().toString();
+                	if(pwd.equals("")) {
+                		Toast.makeText(getActivity(),"please Enter password!",Toast.LENGTH_SHORT).show();
+                	}
+                	else {
+                		if(DigestUtils.md5Hex(pwd).equals(entity.getEntityPassword())) {
+                			Toast.makeText(getActivity(),"Yes your memory is good!",Toast.LENGTH_SHORT).show();
+                		}
+                		else {
+                			Toast.makeText(getActivity(),"That's not correct! try another one.",Toast.LENGTH_SHORT).show();
+                		}
+                	}	
+				}
+				if (view == deleteButton){
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							getActivity());
+					builder.setMessage(
+							"Are you sure you want to delete?");
+					builder.setPositiveButton(
+									"Yes",
+									new DialogInterface.OnClickListener() {
+
+										public void onClick(
+												DialogInterface dialog,
+												int id) {
+											//deleteEntity(entity);
+//											planDao = getHelper().getPlanDao();
+//											dutyDao = getHelper().getDutyDao();
+//											planDao.deleteById(planId);
+//											DutyObject dutyObj = new DutyObject();
+//											dutyObj.setPlanId(planId);
+//											dutyDao.delete(dutyObj);
+//											//flush plan view
+//											DatabaseOperator operator = new DatabaseOperator(planDao , dutyDao);
+//											MainActivity.this.setListAdapter(new MainAdapter(operator.queryPlanobjList(null), MainActivity.this));
+
+										}
+
+									});
+					builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+										public void onClick(
+												DialogInterface dialog,
+												int id) {
+											}
+					});
+					builder.create().show();
+				}
+			}
+        	
+        }
+        
+        
+        
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
             ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
-        
+        @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+            ((MainActivity) activity).onSectionAttached(((PasswordEntity)
+                    getArguments().getSerializable(ARG_ENTITY)).getEntityName());
+        }
        
-    }
+    }*/
 
 }

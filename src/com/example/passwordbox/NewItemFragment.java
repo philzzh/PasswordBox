@@ -1,5 +1,7 @@
 package com.example.passwordbox;
 
+import org.apache.commons.codec4android.digest.DigestUtils;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +22,9 @@ public class NewItemFragment extends Fragment {
     
     private RuntimeExceptionDao<PasswordEntity, Integer> entityDao;
     
+    //use for check duplicates while add a entity.
+    PasswordEntity passwordEntityCopy;
+    
     private EditText nameEdit;
     private EditText passwordEdit;
     private EditText descriptionEdit;
@@ -33,7 +38,7 @@ public class NewItemFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((MainActivity)activity).onSectionAttached(getArguments().getInt(ARG_SECTION_NUMBER));
+        ((MainActivity)activity).onSectionAttached("New Password Item");
     }
 
     @Nullable
@@ -65,7 +70,20 @@ public class NewItemFragment extends Fragment {
         	Toast.makeText(getActivity(),"please Enter name!",Toast.LENGTH_SHORT).show();
             return false;
         }
+        if(passwordEntityCopy!=null&&passwordEntityCopy.equals(getEntityFromView())) {
+        	Toast.makeText(getActivity(),"Unchanged!",Toast.LENGTH_SHORT).show();
+            return false;
+        }
         return true;
+    }
+    
+    public PasswordEntity getEntityFromView() {
+    	PasswordEntity passwordEntity = new PasswordEntity();
+    	passwordEntity.setEntityName(nameEdit.getText().toString());
+    	passwordEntity.setEntityPassword(DigestUtils.md5Hex(passwordEdit.getText().toString()));
+    	passwordEntity.setEntityDiscription(descriptionEdit.getText().toString());
+		return passwordEntity;
+    	
     }
 
     class myClickListener implements View.OnClickListener{
@@ -77,12 +95,10 @@ public class NewItemFragment extends Fragment {
                 if(checkLogic()) {
                 	entityDao = ((MainActivity) getActivity()).getHelper()
             				.getEntityDao();
-                	PasswordEntity passwordEntity = new PasswordEntity();
-                	passwordEntity.setEntityName(nameEdit.getText().toString());
-                	passwordEntity.setEntityPassword(passwordEdit.getText().toString());
-                	passwordEntity.setEntityDiscription(descriptionEdit.getText().toString());
+                	PasswordEntity passwordEntity = getEntityFromView();
                 	entityDao.create(passwordEntity);
-                	
+                	passwordEntityCopy = passwordEntity;
+                	Toast.makeText(getActivity(),"A new Entity added!",Toast.LENGTH_SHORT).show();
                 }
             }
         }
