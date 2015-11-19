@@ -1,12 +1,12 @@
 package com.example.passwordbox;
 import org.apache.commons.codec4android.digest.DigestUtils;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bean.PasswordEntity;
+import com.example.passwordbox.MainActivity.WelcomeFragment;
 
 public class VerifyFragment extends Fragment {
     /**
@@ -105,6 +106,10 @@ public class VerifyFragment extends Fragment {
 											int id) {
 										((MainActivity) getActivity()).deleteEntity(entity);
 //										((MainActivity) getActivity()).setContentView(R.layout.activity_main);
+										FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+								        fragmentManager.beginTransaction()
+						                .replace(R.id.container,new MainActivity.WelcomeFragment())
+						                .commit();
 //										//flush plan view
 //										DatabaseOperator operator = new DatabaseOperator(planDao , dutyDao);
 //										MainActivity.this.setListAdapter(new MainAdapter(operator.queryPlanobjList(null), MainActivity.this));

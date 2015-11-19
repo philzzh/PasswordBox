@@ -2,12 +2,18 @@ package com.example.passwordbox;
 
 import java.util.List;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.bean.PasswordEntity;
 import com.example.db.DatabaseHelper;
@@ -15,6 +21,7 @@ import com.example.db.OrmLiteActionBarActivity;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 
+@SuppressLint("NewApi")
 public class MainActivity extends OrmLiteActionBarActivity<DatabaseHelper>
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
@@ -36,14 +43,18 @@ public class MainActivity extends OrmLiteActionBarActivity<DatabaseHelper>
        /* mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);*/
         mTitle = getTitle();
-        System.out.println("onCreate start"+mNavigationDrawerFragment );
+//        System.out.println("onCreate start"+mNavigationDrawerFragment );
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-        System.out.println("onCreate end"+mNavigationDrawerFragment );
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, new WelcomeFragment())
+                .commit();
+//        System.out.println("onCreate end"+mNavigationDrawerFragment );
     }
     
 	@Override
@@ -138,137 +149,32 @@ public class MainActivity extends OrmLiteActionBarActivity<DatabaseHelper>
     	getRuntimeExceptionDao().delete(passwordEntity);
     }
 
-   /* *//**
+   /**
      * A placeholder fragment containing a simple view.
-     *//*
-    public static class VerifyFragment extends Fragment {
-        *//**
+     */
+	public static class WelcomeFragment extends Fragment {
+        /**
          * The fragment argument representing the section number for this
          * fragment.
-         *//*
-//        private static final String ARG_SECTION_NUMBER = "section_number";
-    	
-		private RuntimeExceptionDao<PasswordEntity, Integer> entityDao;
-    	
-    	private TextView nameView;
-        private EditText passwordEdit;
-        private TextView descriptionView;
-        
-        private Button verifyButton;
-        private Button deleteButton;
-        
-        private static PasswordEntity entity;
-    	
-    	private static final String ARG_ENTITY = "entity";
+         */
 
-        *//**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         *//*
-        public static  VerifyFragment newInstance(PasswordEntity passwordEntity) {
-        	System.out.println("PlaceholderFragment newInstance entity"+passwordEntity);
-        	entity = passwordEntity;
-            VerifyFragment fragment = new VerifyFragment();
-            Bundle args = new Bundle();
-            args.putSerializable(ARG_ENTITY, passwordEntity);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public VerifyFragment() {
+    	
+        public WelcomeFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-//            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+           View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         	
-        	System.out.println("PlaceholderFragment onCreateView entity"+entity);
-        	View rootView = inflater.inflate(R.layout.fragment_verify_item, container, false);
-        	nameView = (TextView)rootView.findViewById(R.id.nameView);
-        	nameView.setText(entity.getEntityName());
-            passwordEdit = (EditText)rootView.findViewById(R.id.passwordEdit);
-            descriptionView = (TextView)rootView.findViewById(R.id.descriptionView);
-            descriptionView.setText(entity.getEntityDiscription());
-            verifyButton = (Button)rootView.findViewById(R.id.verifyButton);
-            deleteButton = (Button)rootView.findViewById(R.id.deleteButton);
-            verifyButton.setOnClickListener(new myClickListener());
             return rootView;
         }
-
-        
-        class myClickListener implements View.OnClickListener{
-
-			@Override
-			public void onClick(View view) {
-				if (view == verifyButton){
-					String pwd = passwordEdit.getText().toString();
-                	if(pwd.equals("")) {
-                		Toast.makeText(getActivity(),"please Enter password!",Toast.LENGTH_SHORT).show();
-                	}
-                	else {
-                		if(DigestUtils.md5Hex(pwd).equals(entity.getEntityPassword())) {
-                			Toast.makeText(getActivity(),"Yes your memory is good!",Toast.LENGTH_SHORT).show();
-                		}
-                		else {
-                			Toast.makeText(getActivity(),"That's not correct! try another one.",Toast.LENGTH_SHORT).show();
-                		}
-                	}	
-				}
-				if (view == deleteButton){
-					AlertDialog.Builder builder = new AlertDialog.Builder(
-							getActivity());
-					builder.setMessage(
-							"Are you sure you want to delete?");
-					builder.setPositiveButton(
-									"Yes",
-									new DialogInterface.OnClickListener() {
-
-										public void onClick(
-												DialogInterface dialog,
-												int id) {
-											//deleteEntity(entity);
-//											planDao = getHelper().getPlanDao();
-//											dutyDao = getHelper().getDutyDao();
-//											planDao.deleteById(planId);
-//											DutyObject dutyObj = new DutyObject();
-//											dutyObj.setPlanId(planId);
-//											dutyDao.delete(dutyObj);
-//											//flush plan view
-//											DatabaseOperator operator = new DatabaseOperator(planDao , dutyDao);
-//											MainActivity.this.setListAdapter(new MainAdapter(operator.queryPlanobjList(null), MainActivity.this));
-
-										}
-
-									});
-					builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-										public void onClick(
-												DialogInterface dialog,
-												int id) {
-											}
-					});
-					builder.create().show();
-				}
-			}
-        	
-        }
-        
-        
-        
         @Override
         public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(((PasswordEntity)
-                    getArguments().getSerializable(ARG_ENTITY)).getEntityName());
+        	super.onAttach(activity);
+        	((MainActivity) activity).onSectionAttached("Welcome");
         }
        
-    }*/
+    }
 
 }

@@ -1,6 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="4">
     <TextView
         android:id="@+id/nameView"
         android:layout_width="fill_parent"
@@ -25,16 +27,19 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
+        android:layout_weight="1"
         android:orientation="horizontal">
         <Button
             android:id="@+id/verifyButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/verify_fragment_verify_Btn"/>
         <Button
             android:id="@+id/deleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/verify_fragment_delete_Btn"/>
         
     </LinearLayout>
