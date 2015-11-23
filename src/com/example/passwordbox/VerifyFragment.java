@@ -26,12 +26,13 @@ public class VerifyFragment extends Fragment {
 //    private static final String ARG_SECTION_NUMBER = "section_number";
 	
 	
-	private TextView nameView;
+	private EditText nameEdit;
     private EditText passwordEdit;
-    private TextView descriptionView;
+    private EditText descriptionEdit;
     
     private Button verifyButton;
     private Button deleteButton;
+    private Button updateButton;
     
     private static PasswordEntity entity;
 	
@@ -61,15 +62,17 @@ public class VerifyFragment extends Fragment {
     	
     	System.out.println("PlaceholderFragment onCreateView entity"+entity);
     	View rootView = inflater.inflate(R.layout.fragment_verify_item, container, false);
-    	nameView = (TextView)rootView.findViewById(R.id.nameView);
-    	nameView.setText(entity.getEntityName());
+    	nameEdit = (EditText)rootView.findViewById(R.id.nameEdit);
+    	nameEdit.setText(entity.getEntityName());
         passwordEdit = (EditText)rootView.findViewById(R.id.passwordEdit);
-        descriptionView = (TextView)rootView.findViewById(R.id.descriptionView);
-        descriptionView.setText(entity.getEntityDiscription());
+        descriptionEdit = (EditText)rootView.findViewById(R.id.descriptionEdit);
+        descriptionEdit.setText(entity.getEntityDiscription());
         verifyButton = (Button)rootView.findViewById(R.id.verifyButton);
         deleteButton = (Button)rootView.findViewById(R.id.deleteButton);
+        updateButton = (Button)rootView.findViewById(R.id.updateButton);
         verifyButton.setOnClickListener(new myClickListener());
         deleteButton.setOnClickListener(new myClickListener());
+        updateButton.setOnClickListener(new myClickListener());
         return rootView;
     }
 
@@ -105,6 +108,7 @@ public class VerifyFragment extends Fragment {
 											DialogInterface dialog,
 											int id) {
 										((MainActivity) getActivity()).deleteEntity(entity);
+										Toast.makeText(getActivity(),"Delete success!",Toast.LENGTH_SHORT).show();
 //										((MainActivity) getActivity()).setContentView(R.layout.activity_main);
 										FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 								        fragmentManager.beginTransaction()
@@ -126,6 +130,22 @@ public class VerifyFragment extends Fragment {
 				});
 				builder.create().show();
 				System.out.println("deleteButton end");
+			}
+			if (view == updateButton){
+				
+					String name = nameEdit.getText().toString();
+					String description = descriptionEdit.getText().toString();
+					String password = DigestUtils.md5Hex(passwordEdit.getText().toString());
+					if(!name.equals(entity.getEntityName())||!description.equals(entity.getEntityDiscription())||!password.equals(entity.getEntityPassword())){
+						entity.setEntityName(name);
+						entity.setEntityDiscription(description);
+						entity.setEntityPassword(password);
+						((MainActivity) getActivity()).updateEntity(entity);
+						Toast.makeText(getActivity(),"Update done!.",Toast.LENGTH_SHORT).show();
+				}
+					else {
+						Toast.makeText(getActivity(),"Unchanged!!",Toast.LENGTH_SHORT).show();
+					}
 			}
 		}
     	

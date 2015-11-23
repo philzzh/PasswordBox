@@ -246,11 +246,11 @@ int id action_bar_root 0x7f05001a
 int id action_bar_subtitle 0x7f050023
 int id action_bar_title 0x7f050022
 int id action_context_bar 0x7f05001d
-int id action_example 0x7f05004a
+int id action_example 0x7f050048
 int id action_menu_divider 0x7f050016
 int id action_menu_presenter 0x7f050017
 int id action_mode_close_button 0x7f050024
-int id action_settings 0x7f050049
+int id action_settings 0x7f050047
 int id activity_chooser_view_content 0x7f050025
 int id always 0x7f05000b
 int id beginning 0x7f050011
@@ -260,7 +260,6 @@ int id container 0x7f05003d
 int id default_activity_button 0x7f050028
 int id deleteButton 0x7f050045
 int id descriptionEdit 0x7f050042
-int id descriptionView 0x7f050047
 int id dialog 0x7f05000e
 int id disableHome 0x7f050008
 int id drawer_layout 0x7f05003c
@@ -278,7 +277,6 @@ int id listMode 0x7f050001
 int id list_item 0x7f050029
 int id middle 0x7f050012
 int id nameEdit 0x7f050040
-int id nameView 0x7f050046
 int id navigation_drawer 0x7f05003e
 int id never 0x7f050009
 int id none 0x7f050010
@@ -309,9 +307,9 @@ int id tabMode 0x7f050002
 int id title 0x7f05002b
 int id top_action_bar 0x7f050020
 int id up 0x7f050021
-int id updateButton 0x7f050044
+int id updateButton 0x7f050046
 int id useLogo 0x7f050003
-int id verifyButton 0x7f050048
+int id verifyButton 0x7f050044
 int id withText 0x7f05000c
 int integer abc_max_action_buttons 0x7f090000
 int layout abc_action_bar_decor 0x7f030000
@@ -365,16 +363,15 @@ int string app_name 0x7f0a000d
 int string navigation_drawer_close 0x7f0a0012
 int string navigation_drawer_open 0x7f0a0011
 int string new_fragment_add_Btn 0x7f0a0019
-int string new_fragment_delete_Btn 0x7f0a001b
 int string new_fragment_description_Text 0x7f0a0018
 int string new_fragment_name_Text 0x7f0a0016
 int string new_fragment_password_Text 0x7f0a0017
-int string new_fragment_update_Btn 0x7f0a001a
 int string title_section1 0x7f0a000e
 int string title_section2 0x7f0a000f
 int string title_section3 0x7f0a0010
-int string verify_fragment_delete_Btn 0x7f0a001d
-int string verify_fragment_verify_Btn 0x7f0a001c
+int string verify_fragment_delete_Btn 0x7f0a001c
+int string verify_fragment_update_Btn 0x7f0a001a
+int string verify_fragment_verify_Btn 0x7f0a001b
 int string welcome_text 0x7f0a0015
 int style AppBaseTheme 0x7f0b008b
 int style AppTheme 0x7f0b008c
@@ -590,7 +587,7 @@ int styleable MenuItem_android_title 7
 int styleable MenuItem_android_titleCondensed 8
 int styleable MenuItem_android_visible 4
 int styleable MenuItem_showAsAction 13
-int[] styleable MenuView { 0x010100ae, 0x0101012c, 0x0101012d, 0x0101012e, 0x0101012f, 0x01010130, 0x01010131, 0x01010438 }
+int[] styleable MenuView { 0x010100ae, 0x0101012c, 0x0101012d, 0x0101012e, 0x0101012f, 0x01010130, 0x01010131, 0x01010435 }
 int styleable MenuView_android_headerBackground 4
 int styleable MenuView_android_horizontalDivider 2
 int styleable MenuView_android_itemBackground 5

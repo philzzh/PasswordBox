@@ -30,8 +30,8 @@ public class NewItemFragment extends Fragment {
     private EditText descriptionEdit;
     
     private Button saveButton;
-    private Button updateButton;
-    private Button deleteButton;
+//    private Button updateButton;
+//    private Button deleteButton;
     public NewItemFragment() {
     }
 
@@ -50,10 +50,10 @@ public class NewItemFragment extends Fragment {
         descriptionEdit = (EditText)rootview.findViewById(R.id.descriptionEdit);
         saveButton = (Button)rootview.findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new myClickListener());
-        updateButton = (Button)rootview.findViewById(R.id.updateButton);
-        updateButton.setOnClickListener(new myClickListener());
-        deleteButton = (Button)rootview.findViewById(R.id.deleteButton);
-        deleteButton.setOnClickListener(new myClickListener());
+//        updateButton = (Button)rootview.findViewById(R.id.updateButton);
+//        updateButton.setOnClickListener(new myClickListener());
+//        deleteButton = (Button)rootview.findViewById(R.id.deleteButton);
+//        deleteButton.setOnClickListener(new myClickListener());
         return rootview;
     }
     
@@ -70,7 +70,7 @@ public class NewItemFragment extends Fragment {
         	Toast.makeText(getActivity(),"please Enter name!",Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(passwordEntityCopy!=null&&passwordEntityCopy.equals(getEntityFromView())) {
+        if(passwordEntityCopy!=null&&compareEntityFromView()) {
         	Toast.makeText(getActivity(),"Unchanged!",Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -83,6 +83,16 @@ public class NewItemFragment extends Fragment {
     	passwordEntity.setEntityPassword(DigestUtils.md5Hex(passwordEdit.getText().toString()));
     	passwordEntity.setEntityDiscription(descriptionEdit.getText().toString());
 		return passwordEntity;
+    }
+    
+    public boolean compareEntityFromView() {
+		if(passwordEntityCopy.getEntityDiscription().equals(descriptionEdit.getText().toString())
+				&&passwordEntityCopy.getEntityName().equals(nameEdit.getText().toString())
+				&&passwordEntityCopy.getEntityPassword().equals(DigestUtils.md5Hex(passwordEdit.getText().toString()))){
+			return true;
+		}
+		else
+			return false;
     	
     }
 

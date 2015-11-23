@@ -148,6 +148,10 @@ public class MainActivity extends OrmLiteActionBarActivity<DatabaseHelper>
     public void deleteEntity(PasswordEntity passwordEntity) {
     	getRuntimeExceptionDao().delete(passwordEntity);
     }
+    
+    public void updateEntity(PasswordEntity passwordEntity) {
+    	getRuntimeExceptionDao().update(passwordEntity);
+    }
 
    /**
      * A placeholder fragment containing a simple view.

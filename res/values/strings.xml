@@ -15,8 +15,7 @@
     <string name="new_fragment_password_Text">password</string>
     <string name="new_fragment_description_Text">description</string>
     <string name="new_fragment_add_Btn">add</string>
-    <string name="new_fragment_update_Btn">update</string>
-    <string name="new_fragment_delete_Btn">delete</string>
+    <string name="verify_fragment_update_Btn">Update</string>
     <string name="verify_fragment_verify_Btn">verify</string>
     <string name="verify_fragment_delete_Btn">delete</string>
 
