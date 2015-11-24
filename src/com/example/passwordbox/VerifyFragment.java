@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,22 +77,41 @@ public class VerifyFragment extends Fragment {
         return rootView;
     }
 
+    private boolean checkLogic() {
+    	if(nameEdit.getText().toString().equals("")){
+    		nameEdit.setError("please Enter name!");
+//        	Toast.makeText(getActivity(),"please Enter name!",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(passwordEdit.getText().toString().equals("")){
+        	passwordEdit.setError("please Enter password!");
+//        	Toast.makeText(getActivity(),"please Enter password!",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(descriptionEdit.getText().toString().equals("")){
+        	descriptionEdit.setError("please Enter description!");
+//        	Toast.makeText(getActivity(),"please Enter description!",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        
+        return true;
+    }
     
     class myClickListener implements View.OnClickListener{
 
 		@Override
 		public void onClick(View view) {
 			if (view == verifyButton){
-				String pwd = passwordEdit.getText().toString();
-            	if(pwd.equals("")) {
-            		Toast.makeText(getActivity(),"please Enter password!",Toast.LENGTH_SHORT).show();
-            	}
-            	else {
-            		if(DigestUtils.md5Hex(pwd).equals(entity.getEntityPassword())) {
-            			Toast.makeText(getActivity(),"Yes your memory is good!",Toast.LENGTH_SHORT).show();
+				
+            	if(checkLogic()) {
+//            		String pwd = passwordEdit.getText().toString();
+            		if(DigestUtils.md5Hex(passwordEdit.getText().toString()).equals(entity.getEntityPassword())) {
+//            			Toast.makeText(getActivity(),"Yes your memory is good!",Toast.LENGTH_SHORT).show();
+            			((MainActivity) getActivity()).showToast(getActivity(), "Yes your memory is good!");
             		}
             		else {
-            			Toast.makeText(getActivity(),"That's not correct! try another one.",Toast.LENGTH_SHORT).show();
+//            			Toast.makeText(getActivity(),"That's not correct! try another one.",Toast.LENGTH_SHORT).show();
+            			((MainActivity) getActivity()).showToast(getActivity(), "That's not correct! try another one.");
             		}
             	}	
 			}
@@ -108,7 +128,8 @@ public class VerifyFragment extends Fragment {
 											DialogInterface dialog,
 											int id) {
 										((MainActivity) getActivity()).deleteEntity(entity);
-										Toast.makeText(getActivity(),"Delete success!",Toast.LENGTH_SHORT).show();
+//										Toast.makeText(getActivity(),"Delete success!",Toast.LENGTH_SHORT).show();
+										((MainActivity) getActivity()).showToast(getActivity(), "Delete success!");
 //										((MainActivity) getActivity()).setContentView(R.layout.activity_main);
 										FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 								        fragmentManager.beginTransaction()
@@ -133,6 +154,7 @@ public class VerifyFragment extends Fragment {
 			}
 			if (view == updateButton){
 				
+				if(checkLogic()) {
 					String name = nameEdit.getText().toString();
 					String description = descriptionEdit.getText().toString();
 					String password = DigestUtils.md5Hex(passwordEdit.getText().toString());
@@ -141,11 +163,14 @@ public class VerifyFragment extends Fragment {
 						entity.setEntityDiscription(description);
 						entity.setEntityPassword(password);
 						((MainActivity) getActivity()).updateEntity(entity);
-						Toast.makeText(getActivity(),"Update done!.",Toast.LENGTH_SHORT).show();
-				}
-					else {
-						Toast.makeText(getActivity(),"Unchanged!!",Toast.LENGTH_SHORT).show();
+						((MainActivity) getActivity()).showToast(getActivity(), "Update done!");
+//						Toast.makeText(getActivity(),"Update done!.",Toast.LENGTH_SHORT).show();
 					}
+					else {
+							((MainActivity) getActivity()).showToast(getActivity(), "Unchanged!!");
+	//						Toast.makeText(getActivity(),"Unchanged!!",Toast.LENGTH_SHORT).show();
+					}
+				}
 			}
 		}
     	

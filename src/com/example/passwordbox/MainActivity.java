@@ -4,16 +4,21 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bean.PasswordEntity;
 import com.example.db.DatabaseHelper;
@@ -151,6 +156,20 @@ public class MainActivity extends OrmLiteActionBarActivity<DatabaseHelper>
     
     public void updateEntity(PasswordEntity passwordEntity) {
     	getRuntimeExceptionDao().update(passwordEntity);
+    }
+    
+    public void showToast(Context context ,String msg) {
+    	Toast toast = new Toast(context);
+//    	toast.setText(msg);
+    	LinearLayout layout = new LinearLayout(context);  
+        TextView textView = new TextView(context);  
+        textView.setText(msg);  
+        textView.setTextSize(24);  
+        layout.addView(textView);  
+        toast.setView(layout);
+    	toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER, 50, 50);
+    	toast.setDuration(Toast.LENGTH_SHORT);
+    	toast.show();
     }
 
    /**

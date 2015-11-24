@@ -59,19 +59,23 @@ public class NewItemFragment extends Fragment {
     
     private boolean checkLogic() {
     	if(nameEdit.getText().toString().equals("")){
-        	Toast.makeText(getActivity(),"please Enter name!",Toast.LENGTH_SHORT).show();
+    		nameEdit.setError("please Enter name!");
+//        	Toast.makeText(getActivity(),"please Enter name!",Toast.LENGTH_SHORT).show();
             return false;
         }
         if(passwordEdit.getText().toString().equals("")){
-        	Toast.makeText(getActivity(),"please Enter name!",Toast.LENGTH_SHORT).show();
+        	passwordEdit.setError("please Enter password!");
+//        	Toast.makeText(getActivity(),"please Enter password!",Toast.LENGTH_SHORT).show();
             return false;
         }
         if(descriptionEdit.getText().toString().equals("")){
-        	Toast.makeText(getActivity(),"please Enter name!",Toast.LENGTH_SHORT).show();
+        	descriptionEdit.setError("please Enter description!");
+//        	Toast.makeText(getActivity(),"please Enter description!",Toast.LENGTH_SHORT).show();
             return false;
         }
         if(passwordEntityCopy!=null&&compareEntityFromView()) {
-        	Toast.makeText(getActivity(),"Unchanged!",Toast.LENGTH_SHORT).show();
+        	((MainActivity) getActivity()).showToast(getActivity(), "Unchanged!");
+//        	Toast.makeText(getActivity(),"Unchanged!",Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -108,12 +112,20 @@ public class NewItemFragment extends Fragment {
                 	PasswordEntity passwordEntity = getEntityFromView();
                 	entityDao.create(passwordEntity);
                 	passwordEntityCopy = passwordEntity;
-                	Toast.makeText(getActivity(),"A new Entity added!",Toast.LENGTH_SHORT).show();
+                	((MainActivity) getActivity()).showToast(getActivity(), "A new Entity added!");
+                	 clearView();
+//                	Toast.makeText(getActivity(),"A new Entity added!",Toast.LENGTH_SHORT).show();
                 }
             }
         }
     }
 
+    public void clearView() {
+    	nameEdit.setText("");
+        passwordEdit.setText("");
+        descriptionEdit.setText("");
+    }
+    
     public static NewItemFragment newInstance(int sectionNumber){
     	NewItemFragment fragment = new NewItemFragment();
         Bundle args = new Bundle();

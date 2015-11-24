@@ -9,7 +9,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Exit</string>
     <string name="action_settings">Add</string>
-    <string name="welcome_text">Welcome to PasswordBox App!</string>
+    <string name="welcome_text">Welcome to PasswordBox App! 
+        This app provide a way that you can store your password.
+        Other people who access app on your phone can\'t get your password cause the password store in app is encrypted by MD5. 
+        It is also avoid your cyber bank locked if you try your password more than the max time.
+    </string>
     
     <string name="new_fragment_name_Text">name</string>
     <string name="new_fragment_password_Text">password</string>
