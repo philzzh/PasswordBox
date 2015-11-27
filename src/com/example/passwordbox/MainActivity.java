@@ -4,7 +4,9 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -118,6 +120,39 @@ public class MainActivity extends OrmLiteActionBarActivity<DatabaseHelper>
     }
 
     @Override
+    public void onBackPressed() {
+    	// TODO Auto-generated method stub
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(
+				"Are you sure you want to exit?");
+		builder.setPositiveButton(
+						"Yes",
+						new DialogInterface.OnClickListener() {
+
+							public void onClick(
+									DialogInterface dialog,
+									int id) {
+								finish();
+							}
+
+						});
+		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+							public void onClick(
+									DialogInterface dialog,
+									int id) {
+								}
+		});
+		builder.create().show();
+    }
+    
+    @Override
+	public void finish() {
+		super.finish();
+		
+	}
+
+	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
