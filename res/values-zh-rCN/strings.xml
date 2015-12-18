@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">密码盒子</string>
+    <string name="title_welcome">欢迎</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">退出</string>
+    <string name="action_settings">新增</string>
+    <string name="welcome_text">欢迎使用密码盒子
+    </string>
+    <!-- widget string -->
+    <string name="new_fragment_name_Text">名称</string>
+    <string name="new_fragment_password_Text">密码</string>
+    <string name="new_fragment_description_Text">描述</string>
+    <string name="new_fragment_add_Btn">增加</string>
+    <string name="verify_fragment_update_Btn">更新</string>
+    <string name="verify_fragment_verify_Btn">验证</string>
+    <string name="verify_fragment_delete_Btn">删除</string>
+
+    <!-- message string -->
+    <!-- check message -->
+    <string name="check_null_name">请输入名称!</string>
+    <string name="check_null_password">请输入密码!</string>
+    <string name="check_null_description">请输入描述!</string>
+    <string name="check_unchanged">没有做出修改!</string>
+    <!-- tips -->
+    <string name="add_tips">增加成功!</string>
+    
+    <string name="verify_tips_yes">密码正确!</string>
+	<string name="verify_tips_no">密码错误，请换一个输入！</string>
+    
+    <string name="delete_tips">确定删除该条记录？</string>
+    <string name="dekete_done">删除成功！</string>
+    
+    <string name="dialog_yes">是</string>
+    <string name="dialog_cancel">否</string>
+   
+    <string name="update_done">更新成功!</string>
+    
+    <string name="exit_tips">确定要退出吗?</string>
+</resources>
+

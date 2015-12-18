@@ -79,21 +79,20 @@ public class VerifyFragment extends Fragment {
 
     private boolean checkLogic() {
     	if(nameEdit.getText().toString().equals("")){
-    		nameEdit.setError("please Enter name!");
+    		nameEdit.setError(getString(R.string.check_null_name));
 //        	Toast.makeText(getActivity(),"please Enter name!",Toast.LENGTH_SHORT).show();
             return false;
         }
         if(passwordEdit.getText().toString().equals("")){
-        	passwordEdit.setError("please Enter password!");
+        	passwordEdit.setError(getString(R.string.check_null_password));
 //        	Toast.makeText(getActivity(),"please Enter password!",Toast.LENGTH_SHORT).show();
             return false;
         }
         if(descriptionEdit.getText().toString().equals("")){
-        	descriptionEdit.setError("please Enter description!");
+        	descriptionEdit.setError(getString(R.string.check_null_description));
 //        	Toast.makeText(getActivity(),"please Enter description!",Toast.LENGTH_SHORT).show();
             return false;
         }
-        
         return true;
     }
     
@@ -107,11 +106,11 @@ public class VerifyFragment extends Fragment {
 //            		String pwd = passwordEdit.getText().toString();
             		if(DigestUtils.md5Hex(passwordEdit.getText().toString()).equals(entity.getEntityPassword())) {
 //            			Toast.makeText(getActivity(),"Yes your memory is good!",Toast.LENGTH_SHORT).show();
-            			((MainActivity) getActivity()).showToast(getActivity(), "Yes your memory is good!");
+            			((MainActivity) getActivity()).showToast(getActivity(), getString(R.string.verify_tips_yes));
             		}
             		else {
 //            			Toast.makeText(getActivity(),"That's not correct! try another one.",Toast.LENGTH_SHORT).show();
-            			((MainActivity) getActivity()).showToast(getActivity(), "That's not correct! try another one.");
+            			((MainActivity) getActivity()).showToast(getActivity(), getString(R.string.verify_tips_no));
             		}
             	}	
 			}
@@ -119,9 +118,9 @@ public class VerifyFragment extends Fragment {
 				System.out.println("deleteButton");
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 				builder.setMessage(
-						"Are you sure you want to delete?");
+						getString(R.string.delete_tips));
 				builder.setPositiveButton(
-								"Yes",
+								getString(R.string.dialog_yes),
 								new DialogInterface.OnClickListener() {
 
 									public void onClick(
@@ -142,7 +141,7 @@ public class VerifyFragment extends Fragment {
 									}
 
 								});
-				builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				builder.setNegativeButton(getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
 
 									public void onClick(
 											DialogInterface dialog,
@@ -163,11 +162,11 @@ public class VerifyFragment extends Fragment {
 						entity.setEntityDiscription(description);
 						entity.setEntityPassword(password);
 						((MainActivity) getActivity()).updateEntity(entity);
-						((MainActivity) getActivity()).showToast(getActivity(), "Update done!");
+						((MainActivity) getActivity()).showToast(getActivity(), getString(R.string.update_done));
 //						Toast.makeText(getActivity(),"Update done!.",Toast.LENGTH_SHORT).show();
 					}
 					else {
-							((MainActivity) getActivity()).showToast(getActivity(), "Unchanged!!");
+							((MainActivity) getActivity()).showToast(getActivity(), getString(R.string.check_unchanged));
 	//						Toast.makeText(getActivity(),"Unchanged!!",Toast.LENGTH_SHORT).show();
 					}
 				}

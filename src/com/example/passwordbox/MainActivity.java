@@ -124,9 +124,9 @@ public class MainActivity extends OrmLiteActionBarActivity<DatabaseHelper>
     	// TODO Auto-generated method stub
     	AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(
-				"Are you sure you want to exit?");
+				getString(R.string.exit_tips));
 		builder.setPositiveButton(
-						"Yes",
+					getString(R.string.dialog_yes),
 						new DialogInterface.OnClickListener() {
 
 							public void onClick(
@@ -136,7 +136,7 @@ public class MainActivity extends OrmLiteActionBarActivity<DatabaseHelper>
 							}
 
 						});
-		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		builder.setNegativeButton(getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
 
 							public void onClick(
 									DialogInterface dialog,
@@ -230,7 +230,7 @@ public class MainActivity extends OrmLiteActionBarActivity<DatabaseHelper>
         @Override
         public void onAttach(Activity activity) {
         	super.onAttach(activity);
-        	((MainActivity) activity).onSectionAttached("Welcome");
+        	((MainActivity) activity).onSectionAttached(getString(R.string.title_welcome));
         }
        
     }

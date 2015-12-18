@@ -1266,19 +1266,45 @@ containing a value of this type.
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000b;
         public static final int action_example=0x7f0a0013;
         public static final int action_settings=0x7f0a0014;
+        /**  tips 
+ tips 
+         */
+        public static final int add_tips=0x7f0a0021;
+        /**  APP string 
+         */
         public static final int app_name=0x7f0a000d;
+        public static final int check_null_description=0x7f0a001f;
+        /**  message string 
+ check message 
+ message string 
+ check message 
+         */
+        public static final int check_null_name=0x7f0a001d;
+        public static final int check_null_password=0x7f0a001e;
+        public static final int check_unchanged=0x7f0a0020;
+        public static final int dekete_done=0x7f0a0025;
+        public static final int delete_tips=0x7f0a0024;
+        public static final int dialog_cancel=0x7f0a0027;
+        public static final int dialog_yes=0x7f0a0026;
+        public static final int exit_tips=0x7f0a0029;
         public static final int navigation_drawer_close=0x7f0a0012;
         public static final int navigation_drawer_open=0x7f0a0011;
         public static final int new_fragment_add_Btn=0x7f0a0019;
         public static final int new_fragment_description_Text=0x7f0a0018;
+        /**  widget string 
+ widget string 
+         */
         public static final int new_fragment_name_Text=0x7f0a0016;
         public static final int new_fragment_password_Text=0x7f0a0017;
-        public static final int title_section1=0x7f0a000e;
         public static final int title_section2=0x7f0a000f;
         public static final int title_section3=0x7f0a0010;
+        public static final int title_welcome=0x7f0a000e;
+        public static final int update_done=0x7f0a0028;
         public static final int verify_fragment_delete_Btn=0x7f0a001c;
         public static final int verify_fragment_update_Btn=0x7f0a001a;
         public static final int verify_fragment_verify_Btn=0x7f0a001b;
+        public static final int verify_tips_no=0x7f0a0023;
+        public static final int verify_tips_yes=0x7f0a0022;
         public static final int welcome_text=0x7f0a0015;
     }
     public static final class style {

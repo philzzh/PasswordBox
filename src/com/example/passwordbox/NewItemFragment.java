@@ -59,22 +59,22 @@ public class NewItemFragment extends Fragment {
     
     private boolean checkLogic() {
     	if(nameEdit.getText().toString().equals("")){
-    		nameEdit.setError("please Enter name!");
+    		nameEdit.setError(getString(R.string.check_null_name));
 //        	Toast.makeText(getActivity(),"please Enter name!",Toast.LENGTH_SHORT).show();
             return false;
         }
         if(passwordEdit.getText().toString().equals("")){
-        	passwordEdit.setError("please Enter password!");
+        	passwordEdit.setError(getString(R.string.check_null_password));
 //        	Toast.makeText(getActivity(),"please Enter password!",Toast.LENGTH_SHORT).show();
             return false;
         }
         if(descriptionEdit.getText().toString().equals("")){
-        	descriptionEdit.setError("please Enter description!");
+        	descriptionEdit.setError(getString(R.string.check_null_description));
 //        	Toast.makeText(getActivity(),"please Enter description!",Toast.LENGTH_SHORT).show();
             return false;
         }
         if(passwordEntityCopy!=null&&compareEntityFromView()) {
-        	((MainActivity) getActivity()).showToast(getActivity(), "Unchanged!");
+        	((MainActivity) getActivity()).showToast(getActivity(), getString(R.string.check_unchanged));
 //        	Toast.makeText(getActivity(),"Unchanged!",Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -112,7 +112,7 @@ public class NewItemFragment extends Fragment {
                 	PasswordEntity passwordEntity = getEntityFromView();
                 	entityDao.create(passwordEntity);
                 	passwordEntityCopy = passwordEntity;
-                	((MainActivity) getActivity()).showToast(getActivity(), "A new Entity added!");
+                	((MainActivity) getActivity()).showToast(getActivity(), getString(R.string.add_tips));
                 	 clearView();
 //                	Toast.makeText(getActivity(),"A new Entity added!",Toast.LENGTH_SHORT).show();
                 }
